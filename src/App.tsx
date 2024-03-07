@@ -1,6 +1,7 @@
 import { useState } from "react";
 import Header from "./components/Header";
 import AddForm from "./components/AddForm";
+import DeleteTodo from "./components/DeleteTodo";
 import { v4 } from "uuid";
 import "./App.css";
 
@@ -24,6 +25,13 @@ function App() {
     const newTodos = [...todos, newTodo];
     setTodos(newTodos);
   };
+
+  const deleteTodo = (id: string) => {
+    const deletedTodo = todos.filter((todo) => todo.id !== id);
+
+    setTodos(deletedTodo);
+  };
+
   return (
     <>
       <div>
@@ -39,7 +47,7 @@ function App() {
                 <p>{todo.title}</p>
                 <p>{todo.content}</p>
                 <button>{todo.isDone ? "완료" : "취소"}</button>
-                <button>삭제</button>
+                <DeleteTodo todoId={todo.id} onDelete={deleteTodo} />
               </div>
             </li>
           ))}
