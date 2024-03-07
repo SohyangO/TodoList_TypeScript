@@ -9,17 +9,19 @@ type Todo = {
   id: string;
   title: string;
   content: string;
+  deadLine: string;
   isDone: boolean;
 };
 
 function App() {
   const [todos, setTodos] = useState<Todo[]>([]);
 
-  const addTodo = (title: string, content: string) => {
+  const addTodo = (title: string, content: string, deadLine: string) => {
     const newTodo: Todo = {
       id: v4(),
       title,
       content,
+      deadLine,
       isDone: false,
     };
     const newTodos = [...todos, newTodo];
@@ -46,6 +48,13 @@ function App() {
               <div>
                 <p>{todo.title}</p>
                 <p>{todo.content}</p>
+                <p>
+                  {new Date(todo.deadLine).toLocaleDateString("ko-KR", {
+                    year: "numeric",
+                    month: "long",
+                    day: "numeric",
+                  })}
+                </p>
                 <button>{todo.isDone ? "완료" : "취소"}</button>
                 <DeleteTodo todoId={todo.id} onDelete={deleteTodo} />
               </div>
